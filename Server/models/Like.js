@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 
 const LikeSchema = new mongoose.Schema(
     {
-        userID: {type: Number, required: true},
-        ideaID: {type: Number, required: true}
+        userID: {type: String, required: true},
+        ideaID: {type: String, required: true}
     },
     {
         timestamps: true

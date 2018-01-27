@@ -1,28 +1,28 @@
 const PORT = 6969;
 const express = require("express");
-const cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 const ejs = require('ejs');
 const path = require('path');
 const app = express();
+const session = require('express-session');
+
+app.use(
+    session(
+        {
+            // saveUninitialized: false,
+            secret: '110% un-freaking-breakable encryption, 50%guaranteed'
+        }
+    )
+);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'ngClient/dist')));
 
-app.use(
-    cookieSession(
-        {
-            name: 'session',
-            secret: '________DEV_SECRET=EASY_SECRET________',
-            maxAge: 86400000
-        }
-    )
-);
 
-require("./server/config/mongoose");
+require("./Server/config/mongoose");
 
-const routeRouter = require("./server/config/routes");
+const routeRouter = require("./Server/config/routes");
 
 routeRouter(app);
 app.listen(PORT, () => {
