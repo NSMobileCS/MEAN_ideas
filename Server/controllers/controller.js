@@ -89,21 +89,19 @@ module.exports = {
             {_id: req.params.id},
             (err, idea) => {
                 if (err) console.log(err);
-                var authorID = idea.userID
-                console.log(`authorID: ${authorID} (${typeof authorID})`);
                 User.findOne(
-                    {_id: authorID},
+                    {_id: idea.userID},
                     (err, author) => {
                         Like.count(
-                            {"userID": idea.userID},
+                            {"ideaID": idea._id},
                             (err, likeCount) => {
                                 if (err) return res.json(err);
                                 console.log(`likeCount: ${likeCount}`);
                                 return res.json(
                                     {
-                                        // author: author.name,
-                                        likes: likeCount
-                                        // body: idea.body
+                                        author: author.name,
+                                        likes: likeCount,
+                                        body: idea.body
                                     }
                                 );
                             }
